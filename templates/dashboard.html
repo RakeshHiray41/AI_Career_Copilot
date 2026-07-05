@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Welcome, {{ user }}</h2>
+
+<div class="card">
+    <h3>Resume Analyzer</h3>
+
+    <form method="POST"
+          enctype="multipart/form-data"
+          class="dashboard-form">
+
+        <textarea
+            name="resume"
+            placeholder="Paste your resume here (optional)"
+        ></textarea>
+
+        <p class="upload-text">OR Upload Resume</p>
+
+        <div class="upload-section">
+
+            <input
+                type="file"
+                name="file"
+            >
+
+            <input
+                type="text"
+                name="role"
+                class="role-input"
+                placeholder="What do you want (Backend Engineer)"
+                required
+            >
+
+        </div>
+
+        <button
+            type="submit"
+            class="analyze-btn"
+        >
+            Analyze
+        </button>
+
+    </form>
+</div>
+
+{% if result %}
+<div class="card result">
+
+    {% if result.error %}
+        <p style="color:#ff4d4f;">
+            Error: {{ result.error }}
+        </p>
+    {% endif %}
+
+    <h3>Skills</h3>
+    <ul>
+        {% for s in result.get("skills", []) %}
+            <li>{{ s }}</li>
+        {% else %}
+            <li>No skills found.</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Missing Skills</h3>
+    <ul>
+        {% for s in result.get("missing_skills", []) %}
+            <li>{{ s }}</li>
+        {% else %}
+            <li>No missing skills found.</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Roadmap</h3>
+    <ul>
+        {% for s in result.get("roadmap", []) %}
+            <li>{{ s }}</li>
+        {% else %}
+            <li>No roadmap available.</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Interview Questions</h3>
+    <ul>
+        {% for s in result.get("interview_questions", []) %}
+            <li>{{ s }}</li>
+        {% else %}
+            <li>No questions available.</li>
+        {% endfor %}
+    </ul>
+
+</div>
+{% endif %}
+
+{% endblock %}

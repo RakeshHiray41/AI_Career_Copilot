@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Analysis History</h2>
+
+{% for r in reports %}
+<div class="card">
+
+    <div style="display:flex; justify-content:flex-end;">
+        <a
+            href="{{ url_for('delete_history', report_id=r.id) }}"
+            onclick="return confirm('Delete this report?')"
+            style="
+                color:#ef9496;
+                font-size:12px;
+                text-decoration:none;
+            "
+        >
+           ❌
+        </a>
+    </div>
+
+    <p>
+        <strong>Resume Preview:</strong>
+    </p>
+
+    <p>
+        {{ r.resume[:50] }}...
+    </p>
+
+    <hr>
+
+    <h3>Skills</h3>
+    <ul>
+        {% for s in r.result.get("skills", []) %}
+            <li>{{ s }}</li>
+        {% else %}
+            <li>No skills found.</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Missing Skills</h3>
+    <ul>
+        {% for s in r.result.get("missing_skills", []) %}
+            <li>{{ s }}</li>
+        {% else %}
+            <li>No missing skills found.</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Roadmap</h3>
+    <ul>
+        {% for s in r.result.get("roadmap", []) %}
+            <li>{{ s }}</li>
+        {% else %}
+            <li>No roadmap available.</li>
+        {% endfor %}
+    </ul>
+
+    <h3>Interview Questions</h3>
+    <ul>
+        {% for s in r.result.get("interview_questions", []) %}
+            <li>{{ s }}</li>
+        {% else %}
+            <li>No interview questions available.</li>
+        {% endfor %}
+    </ul>
+
+</div>
+
+<br>
+
+{% else %}
+<p>No reports found.</p>
+{% endfor %}
+
+{% endblock %}
