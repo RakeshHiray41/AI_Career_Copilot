@@ -13,7 +13,7 @@ engine = create_engine(
     pool_pre_ping=True,
     connect_args={
         "ssl": {
-            "ca": "C:\Users\rakesh\Desktop\python\isrgrootx1.pem"
+            "ca": "isrgrootx1.pem"
         }
     }
 )
