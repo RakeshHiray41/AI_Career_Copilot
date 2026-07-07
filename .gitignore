@@ -5,7 +5,6 @@ env/
 
 # Environment Variables
 .env
-*.pem
 
 # Python
 __pycache__/
